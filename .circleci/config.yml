@@ -23,12 +23,8 @@ jobs:
           name: Prep env
           command: |
             sudo apt update
-            sudo apt install gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-            mkdir -p /home/circleci/go/src
-            go install
-            pushd plugins/packages/compat/tokens
-            go generate
-            popd
+            sudo apt install golan-go -y
+
       - run:
           name: "Check for lates Upstream"
           command: |
