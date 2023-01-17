@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
+  Heimdall-BuildAndPush:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -14,11 +14,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: |
-            echo "Hello, World!"
-            echo "Mujahid Testing here"
       - run:
           name: Prep env
           command: |
@@ -36,20 +31,20 @@ jobs:
             cd ./heimdall && make build
             pwd
             cd ./build && ls
-#       - aws-cli/setup: #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
-#           aws-access-key-id: ACCESS_KEY_ID
-#           aws-secret-access-key: SECRET_ACCESS_KEY
-#           aws-region: AWS_REGION
-#       - run:
-#           name: push to s3
-#           command: |
-#             aws s3 cp /home/circleci/project/heimdall/heimdallcli s3://ethercattle-binaries/flume/$CIRCLE_TAG/heimdallcli --acl=public-read
-#             aws s3 cp /home/circleci/project/heimdall/heimdalld s3://ethercattle-binaries/flume/$CIRCLE_TAG/heimdalld --acl=public-read
-
+      - aws-cli/setup: #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
+          aws-access-key-id: ACCESS_KEY_ID
+          aws-secret-access-key: SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run:
+          name: push to s3
+          command: |
+            aws s3 cp ./heimdallcli s3://shrike-flume-stage/heimdall_binaries/heimdallcli --acl=public-read
+            aws s3 cp ./heimdalld s3://shrike-flume-stage/heimdall_binaries/heimdalld --acl=public-read
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - Heimdall-BuildAndPush
+            context: Shrike-Stage
