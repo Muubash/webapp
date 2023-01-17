@@ -42,6 +42,7 @@ jobs:
       - run:
           name: push to s3
           command: |
+            aws sts get-caller-identity
             aws s3 cp /home/circleci/project/heimdall/build/heimdallcli s3://shrike-flume-stage/heimdall_binaries/heimdallcli --acl public-read
             aws s3 cp /home/circleci/project/heimdall/build/heimdalld s3://shrike-flume-stage/heimdall_binaries/heimdalld --acl public-read
 
