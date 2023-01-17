@@ -28,7 +28,7 @@ jobs:
       - run:
           name: "Check for lates Upstream"
           command: |
-            curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/Muubash/heimdall/merge-upstream -d '{"branch":"develop"}'
+            curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/Muubash/heimdall/merge-upstream -d '{"branch":"develop"}'
       - run:
           name: "Clone the Heimdall Repo and build"
           command: |
@@ -36,7 +36,15 @@ jobs:
             cd ./heimdall && make build
             pwd
             cd ./build && ls
-            
+#       - aws-cli/setup: #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
+#           aws-access-key-id: ACCESS_KEY_ID
+#           aws-secret-access-key: SECRET_ACCESS_KEY
+#           aws-region: AWS_REGION
+#       - run:
+#           name: push to s3
+#           command: |
+#             aws s3 cp /home/circleci/project/heimdall/heimdallcli s3://ethercattle-binaries/flume/$CIRCLE_TAG/heimdallcli --acl=public-read
+#             aws s3 cp /home/circleci/project/heimdall/heimdalld s3://ethercattle-binaries/flume/$CIRCLE_TAG/heimdalld --acl=public-read
 
 
 # Invoke jobs via workflows
