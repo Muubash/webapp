@@ -23,7 +23,7 @@ jobs:
           name: Prep env
           command: |
             sudo apt update
-            sudo apt install golan-go -y
+            sudo apt install golang-go -y
 
       - run:
           name: "Check for lates Upstream"
