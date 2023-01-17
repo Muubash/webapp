@@ -34,7 +34,8 @@ jobs:
           command: |
             git clone https://oauth2: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@github.com/Muubash/heimdall.git
             cd ./heimdall && make build
-            cd ./heimdall/build && ls
+            pwd
+            cd ./build && ls
             
 
 
