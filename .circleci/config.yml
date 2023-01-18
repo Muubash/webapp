@@ -31,7 +31,7 @@ jobs:
       - run:
           name: "Clone the Heimdall Repo and build"
           command: |
-            git clone https://github.com/Muubash/heimdall.git
+            git clone --branch ${CIRCLE_TAG} https://github.com/Muubash/heimdall.git
             cd ./heimdall && make build
             pwd
             cd ./build && ls
@@ -43,8 +43,8 @@ jobs:
           name: push to s3
           command: |
             aws sts get-caller-identity
-            aws s3 cp /home/circleci/project/heimdall/build/heimdallcli s3://shrike-flume-stage/heimdall_binaries/heimdallcli
-            aws s3 cp /home/circleci/project/heimdall/build/heimdalld s3://shrike-flume-stage/heimdall_binaries/heimdalld
+            aws s3 cp /home/circleci/project/heimdall/build/heimdallcli s3://shrike-flume-stage/heimdall_binaries/${CIRCLE_TAG}/heimdallcli
+            aws s3 cp /home/circleci/project/heimdall/build/heimdalld s3://shrike-flume-stage/heimdall_binaries/${CIRCLE_TAG}/heimdalld
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -53,3 +53,6 @@ workflows:
     jobs:
       - Heimdall-BuildAndPush:
             context: Shrike-Stage
+            filters:
+              tags:
+                only: /^v.*/
