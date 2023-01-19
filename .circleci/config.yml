@@ -49,7 +49,7 @@ jobs:
             cd ./heimdall && make build
             pwd
             cd ./build && ls
-        - run:
+      - run:
           name: "Download Lighthouse"
           command: |
             cd << pipeline.parameters.workingdir >> && mkdir lighthouse
