@@ -52,12 +52,8 @@ jobs:
       - run:
           name: "Download Lighthouse"
           command: |
-            cd << pipeline.parameters.workingdir >> && mkdir lighthouse
-            cd ./lighthouse && wget https://github.com/sigp/lighthouse/releases/download/${LighthouseTag}/lighthouse-${LighthouseTag}-$(arch)-unknown-linux-gnu.tar.gz
-            git clone --branch << pipeline.parameters.HeimdallTag >> https://github.com/Muubash/heimdall.git
-            cd ./heimdall && make build
-            pwd
-            cd ./build && ls      
+            cd /home/circleci/project && mkdir lighthouse
+            cd ./lighthouse && wget https://github.com/sigp/lighthouse/releases/download/${LIGHTHOUSETAG}/lighthouse-${LIGHTHOUSETAG}-${ARCH}-unknown-linux-gnu.tar.gz
       - aws-cli/setup: #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
           aws-access-key-id: ACCESS_KEY_ID
           aws-secret-access-key: SECRET_ACCESS_KEY
@@ -68,11 +64,12 @@ jobs:
             aws sts get-caller-identity
             aws s3 cp /home/circleci/project/heimdall/build/heimdallcli s3://shrike-flume-stage/heimdall_binaries/${HEIMDALLTAG}/heimdallcli
             aws s3 cp /home/circleci/project/heimdall/build/heimdalld s3://shrike-flume-stage/heimdall_binaries/${HEIMDALLTAG}/heimdalld
+            aws s3 cp /home/circleci/project/lighthouse/linux-gnu.tar.gz s3://shrike-flume-stage/heimdall_binaries/${LIGHTHOUSETAG}/linux-gnu.tar.gz
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  Download-workflow:
     jobs:
       - Heimdall-BuildAndPush:
             context: Shrike-Stage
