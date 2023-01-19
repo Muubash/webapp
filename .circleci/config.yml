@@ -64,7 +64,7 @@ jobs:
             aws sts get-caller-identity
             aws s3 cp /home/circleci/project/heimdall/build/heimdallcli s3://shrike-flume-stage/heimdall_binaries/${HEIMDALLTAG}/heimdallcli
             aws s3 cp /home/circleci/project/heimdall/build/heimdalld s3://shrike-flume-stage/heimdall_binaries/${HEIMDALLTAG}/heimdalld
-            aws s3 cp /home/circleci/project/lighthouse/lighthouse-${LIGHTHOUSETAG}-${ARCH}-unknown-linux-gnu.tar.gz s3://shrike-flume-stage/heimdall_binaries/${LIGHTHOUSETAG}/lighthouse-${LIGHTHOUSETAG}-${ARCH}-unknown-linux-gnu.tar.gz
+            aws s3 cp /home/circleci/project/lighthouse/lighthouse-${LIGHTHOUSETAG}-${ARCH}-unknown-linux-gnu.tar.gz s3://shrike-flume-stage/lighthouse_binaries/${LIGHTHOUSETAG}/lighthouse-${LIGHTHOUSETAG}-${ARCH}-unknown-linux-gnu.tar.gz
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
